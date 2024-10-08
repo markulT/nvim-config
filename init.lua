@@ -37,3 +37,19 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Function to set up autosave
+local function setup_autosave()
+  vim.cmd [[
+    augroup AutoSave
+      autocmd!
+      " Autosave when leaving insert mode after 1 second of inactivity
+      autocmd CursorHoldI,CursorHold * silent! wall
+    augroup END
+  ]]
+end
+vim.o.updatetime = 1000
+-- aboba
+
+-- Call the autosave function during startup
+setup_autosave()

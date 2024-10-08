@@ -18,6 +18,8 @@ end, { desc = "Close All Buffers" })
 map("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Find Todo" })
 map("n", "\\", "<cmd>:vsplit <CR>", { desc = "Vertical Split" })
 
+map("n", "<leader>s", vim.lsp.buf.signature_help, { noremap = true, silent = true })
+
 -- Test mappings Start
 map("n", "<Leader>tr", function()
   require("neotest").run.run()
@@ -38,6 +40,9 @@ end, { desc = "Open test output" })
 -- Test mappings End
 local opts = { noremap = true, silent = true }
 -- Trouble
+map("n", "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<CR>", { noremap = true, silent = true })
+
+--
 map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
 map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 map("n", "<leader>qx", "<cmd>TroubleToggle<CR>", { desc = "Open Trouble" })

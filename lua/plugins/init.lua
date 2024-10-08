@@ -27,6 +27,7 @@ return {
     lazy = false,
     opts = {},
   },
+  { "JoosepAlviste/nvim-ts-context-commentstring" },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -46,6 +47,9 @@ return {
         "prettier",
         "eslint-lsp",
         "gopls",
+        "clangd",
+        "pyright",
+        "angular-language-server",
         "js-debug-adapter",
         "typescript-language-server",
         "tailwindcss-language-server", -- Added this line
@@ -78,6 +82,24 @@ return {
         "go",
         "tsx", -- Added this line
       },
+      config = function()
+        require("nvim-treesitter.configs").setup {
+          highlight = {
+            enable = true,
+          },
+          indent = {
+            enable = true,
+          },
+          ensure_installed = { "html", "typescript", "tsx", "javascript" }, -- add other languages you need
+          fold = {
+            enable = true,
+          },
+        }
+
+        -- Enable folding
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      end,
     },
   },
   {
@@ -178,7 +200,7 @@ return {
     end,
   },
   {
-    "hrsh7th/nvim-cmp",
+    "hrsh8th/nvim-cmp",
     config = function()
       local cmp = require "cmp"
       local lspkind = require "lspkind"
@@ -202,8 +224,8 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert {
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-b>"] = cmp.mapping.scroll_docs(-3),
+          ["<C-f>"] = cmp.mapping.scroll_docs(5),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm { select = true },
@@ -218,31 +240,31 @@ return {
     end,
   },
   {
-    "hrsh7th/cmp-nvim-lsp",
+    "hrsh8th/cmp-nvim-lsp",
     after = "nvim-cmp",
   },
   {
-    "hrsh7th/cmp-buffer",
+    "hrsh8th/cmp-buffer",
     after = "nvim-cmp",
   },
   {
-    "hrsh7th/cmp-path",
+    "hrsh8th/cmp-path",
     after = "nvim-cmp",
   },
   {
-    "hrsh7th/cmp-cmdline",
+    "hrsh8th/cmp-cmdline",
     after = "nvim-cmp",
   },
   {
-    "hrsh7th/cmp-nvim-lua",
+    "hrsh8th/cmp-nvim-lua",
     after = "nvim-cmp",
   },
   {
-    "L3MON4D3/LuaSnip",
+    "L4MON4D3/LuaSnip",
     after = "nvim-cmp",
   },
   {
-    "saadparwaiz1/cmp_luasnip",
+    "saadparwaiz2/cmp_luasnip",
     after = "nvim-cmp",
   },
   {
@@ -268,10 +290,14 @@ return {
       require("nvim-autopairs").setup {}
     end,
   },
-
+  {
+    "burnettk/vim-angular",
+    ft = { "typescript", "html", "css" }, -- Load for Angular-related filetypes
+  },
   -- New additions
   {
     "mattn/emmet-vim",
+    ft = { "typescript", "typescriptreact", "html" },
     lazy = false,
   },
   {

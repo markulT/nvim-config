@@ -23,6 +23,24 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+lspconfig.clangd.setup {
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+    "--completion-style=detailed",
+    "--function-arg-placeholders",
+    "--fallback-style=llvm",
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
+  root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+  init_options = {
+    compilationDatabasePath = "build",
+  },
+}
+lspconfig.pyright.setup {}
+
 lspconfig.tailwindcss.setup {
   cmd = { "tailwindcss-language-server", "--stdio" },
   filetypes = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
